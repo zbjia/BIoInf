@@ -7,3 +7,7 @@ write.dna(seq1, file = "seq1.fasta", format="fasta")
 
 seq1_format <- read.fasta(file = "seq1.fasta", seqtype = "DNA", as.string = TRUE, forceDNAtolower = FALSE)
 head(seq1_format)
+
+##test##
+
+##test2##
