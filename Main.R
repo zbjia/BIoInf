@@ -40,7 +40,7 @@ wprotfile<- function(accnum, pchar, fname){
 sink("VHmasteracc.txt")
 sink()
 
-accession.num<-paste("KU", seq(602083, 602087,2),sep="")
+accession.num<-paste("KU", seq(602083, 602723,2),sep="")
 
 #pulls sequences from NCBI from a matrix of accesion number strings
 for(seq1 in accession.num){
@@ -64,15 +64,15 @@ for(seq1 in accession.num){
 #y<- readLines("~/BioInf/VH DNA/KU602085.fasta")
 
 directory.seq<- function(single.acc.num){
-  paste("~/BioInf/VH DNA/", single.acc.num, ".fasta", sep="")
+  paste("~/BioInf/VH Prot/", single.acc.num, ".fasta", sep="")
 }
 
 masteracc.num <- readLines("VHmasteracc.txt")
 xlsize=length(masteracc.num)+1 #number of sequences
 
-xlwb    <- createWorkbook(type="xlsx")           # create an empty workbook
+xlwb <- createWorkbook(type="xlsx")           # create an empty workbook
 sheet <- createSheet(xlwb, sheetName="Sheet1")   # create an empty sheet 
-rows  <- createRow(sheet, rowIndex=1:xlsize)      #rows
+rows <- createRow(sheet, rowIndex=1:xlsize)      #rows
 cells <- createCell(rows, colIndex=1:xlsize)      #columns
 
 data("BLOSUM62")
@@ -83,7 +83,7 @@ for (i in 1:length(masteracc.num)){
   for (j in 2:length(masteracc.num)){
     s1=read.string(directory.seq(masteracc.num[i]))
     s2=read.string(directory.seq(masteracc.num[j]))
-    localAlign <- pairwiseAlignment(s1,s2, substitutionMatrix=BLOSUM62, gapOpening=5, gapExtension=2, scoreOnly=TRUE)
+    localAlign <- pairwiseAlignment(s1,s2, substitutionMatrix=BLOSUM62, gapOpening=-5, gapExtension=-2, scoreOnly=TRUE, type="local")
     setCellValue(cells[[1+i,1+j]], localAlign)
     setCellValue(cells[[1+j,1+i]], localAlign)
   }
